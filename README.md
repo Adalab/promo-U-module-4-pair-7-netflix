@@ -19,11 +19,11 @@ Por favor marca a continuación los ejercicios que hayáis terminado:
 - [X] Crea la relación Movies-Actors.
     
 4.4 Node JS:
-- [ ] Descarga el proyecto
-- [ ] Arranca el backend
-- [ ] Arranca el front end
-- [ ] Prueba el proyecto
-- [ ] Entiende el código del proyecto
+- [X] Descarga el proyecto
+- [X] Arranca el backend
+- [X] Arranca el front end
+- [X] Prueba el proyecto
+- [X] Entiende el código del proyecto
     
 4.5 Express JS I:
 - [ ] Pide todas las películas
