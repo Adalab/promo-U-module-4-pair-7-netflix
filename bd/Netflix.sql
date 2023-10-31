@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 8.0.34, for macos13 (arm64)
+-- MySQL dump 10.13  Distrib 8.0.34, for macos13 (x86_64)
 --
--- Host: 127.0.0.1    Database: netflix
+-- Host: sql.freedb.tech    Database: freedb_BD_netflix
 -- ------------------------------------------------------
--- Server version	8.0.32
+-- Server version	8.0.35-0ubuntu0.22.04.1
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -28,6 +28,7 @@ CREATE TABLE `actors` (
   `lastname` varchar(45) NOT NULL,
   `country` varchar(45) NOT NULL,
   `birthday` date DEFAULT NULL,
+  `image` varchar(1000) DEFAULT NULL,
   PRIMARY KEY (`idActor`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -38,7 +39,7 @@ CREATE TABLE `actors` (
 
 LOCK TABLES `actors` WRITE;
 /*!40000 ALTER TABLE `actors` DISABLE KEYS */;
-INSERT INTO `actors` VALUES (1,'Tom','Hanks','Estados Unidos','1956-07-09'),(2,'Roberto','Benigni','Italia','1952-10-27'),(3,'John','Travolta','Estados Unidos','1954-02-18');
+INSERT INTO `actors` VALUES (1,'Tom','Hanks','Estados Unidos','1956-07-09','https://www.usmagazine.com/wp-content/uploads/2023/03/tom-hanks-through-the-years.jpg?quality=86&strip=all'),(2,'Roberto','Benigni','Italia','1952-10-27','https://4.bp.blogspot.com/-zk1yv8841VE/UgmP9CO_D1I/AAAAAAAAEis/NojcjwdxqIo/s1600/Roberto-Benigni.jpg'),(3,'John','Travolta','Estados Unidos','1954-02-18','https://prod-images.tcm.com/Master-Profile-Images/JohnTravolta.193826.1.jpg');
 /*!40000 ALTER TABLE `actors` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -66,8 +67,71 @@ CREATE TABLE `movies` (
 
 LOCK TABLES `movies` WRITE;
 /*!40000 ALTER TABLE `movies` DISABLE KEYS */;
-INSERT INTO `movies` VALUES (1,'Pupl Fiction','Crimen','https://pics.filmaffinity.com/pulp_fiction-210382116-large.jpg','Top 10',1994),(2,'La vita è bella','Comedia','https://pics.filmaffinity.com/la_vita_e_bella-646167341-mmed.jpg','Top 10',1996),(3,'Forrest Gump','Comedia','https://pics.filmaffinity.com/forrest_gump-212765827-mmed.jpg','Top 10 ',1994);
+INSERT INTO `movies` VALUES (1,'Pulp Fiction','Crimen','https://pics.filmaffinity.com/pulp_fiction-210382116-large.jpg','Top 10',1994),(2,'La vita è bella','Comedia','https://pics.filmaffinity.com/la_vita_e_bella-646167341-mmed.jpg','Top 10',1996),(3,'Forrest Gump','Comedia','https://pics.filmaffinity.com/forrest_gump-212765827-mmed.jpg','Top 10',1994);
 /*!40000 ALTER TABLE `movies` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `rel_movies_actors`
+--
+
+DROP TABLE IF EXISTS `rel_movies_actors`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `rel_movies_actors` (
+  `fk_idActor` int NOT NULL,
+  `fk_idMovies` int NOT NULL,
+  `idRel_movies_actors` int NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`idRel_movies_actors`),
+  KEY `fk_actors_has_movies_movies1_idx` (`fk_idMovies`),
+  KEY `fk_actors_has_movies_actors1_idx` (`fk_idActor`),
+  CONSTRAINT `fk_actors_has_movies_actors1` FOREIGN KEY (`fk_idActor`) REFERENCES `actors` (`idActor`),
+  CONSTRAINT `fk_actors_has_movies_movies1` FOREIGN KEY (`fk_idMovies`) REFERENCES `movies` (`idMovies`),
+  CONSTRAINT `rel_movies_actors_ibfk_1` FOREIGN KEY (`fk_idActor`) REFERENCES `actors` (`idActor`),
+  CONSTRAINT `rel_movies_actors_ibfk_2` FOREIGN KEY (`fk_idMovies`) REFERENCES `movies` (`idMovies`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `rel_movies_actors`
+--
+
+LOCK TABLES `rel_movies_actors` WRITE;
+/*!40000 ALTER TABLE `rel_movies_actors` DISABLE KEYS */;
+INSERT INTO `rel_movies_actors` VALUES (1,3,1),(2,2,2),(3,1,3);
+/*!40000 ALTER TABLE `rel_movies_actors` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `rel_movies_users`
+--
+
+DROP TABLE IF EXISTS `rel_movies_users`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `rel_movies_users` (
+  `fk_idUser` int NOT NULL,
+  `fk_idMovies` int NOT NULL,
+  `idRel_movies_users` int NOT NULL AUTO_INCREMENT,
+  `score` float DEFAULT NULL,
+  PRIMARY KEY (`idRel_movies_users`),
+  KEY `fk_users_has_movies_movies1_idx` (`fk_idMovies`),
+  KEY `fk_users_has_movies_users1_idx` (`fk_idUser`),
+  CONSTRAINT `fk_users_has_movies_movies1` FOREIGN KEY (`fk_idMovies`) REFERENCES `movies` (`idMovies`),
+  CONSTRAINT `fk_users_has_movies_users1` FOREIGN KEY (`fk_idUser`) REFERENCES `users` (`idUser`),
+  CONSTRAINT `rel_movies_users_ibfk_1` FOREIGN KEY (`fk_idUser`) REFERENCES `users` (`idUser`),
+  CONSTRAINT `rel_movies_users_ibfk_2` FOREIGN KEY (`fk_idMovies`) REFERENCES `movies` (`idMovies`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `rel_movies_users`
+--
+
+LOCK TABLES `rel_movies_users` WRITE;
+/*!40000 ALTER TABLE `rel_movies_users` DISABLE KEYS */;
+INSERT INTO `rel_movies_users` VALUES (1,1,1,8),(1,2,2,7.5),(2,2,3,6.7);
+/*!40000 ALTER TABLE `rel_movies_users` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -107,4 +171,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-10-27 10:31:21
+-- Dump completed on 2023-10-31 16:40:30
