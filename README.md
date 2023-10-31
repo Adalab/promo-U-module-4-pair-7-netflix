@@ -8,15 +8,15 @@ Por favor marca a continuación los ejercicios que hayáis terminado:
 - [X] Crea un repositorio en Github.
       
 4.2 MYSQL II:
-- [ ] Consultas sobre las películas
-- [ ] Consultas sobre los actores.
-- [ ] Consultas sobre los usuarios.
-- [ ] Bonus: Agrega más campos a las tablas.
+- [X] Consultas sobre las películas
+- [X] Consultas sobre los actores.
+- [X] Consultas sobre los usuarios.
+- [X] Bonus: Agrega más campos a las tablas.
       
 4.3 MYSQL III:
-- [ ] Piensa qué relación es
-- [ ] Crea la relación User-Movies.
-- [ ] Crea la relación Movies-Actors.
+- [X] Piensa qué relación es
+- [X] Crea la relación User-Movies.
+- [X] Crea la relación Movies-Actors.
     
 4.4 Node JS:
 - [ ] Descarga el proyecto
