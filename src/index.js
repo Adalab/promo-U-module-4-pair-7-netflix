@@ -28,12 +28,36 @@ server.listen(serverPort, () => {
 // endpoints
 server.get('/movies', async (req, res) => {
   const conn = await getConnection();
-  const sql = 'SELECT * FROM movies';
-  const [results, fields] = await conn.query(sql);
-  res.json({
-    success: true,
-    movies: results,
-  });
+  const genreFilterParam = req.query.genre;
+  const sortFilterParam = req.query.sort;
+  if (genreFilterParam){
+    const sqlGenre = `SELECT * FROM freedb_BD_netflix.movies WHERE genre="${genreFilterParam}"`;
+    const [results] = await conn.query(sqlGenre);
+    console.log ("He recibido el género");
+    res.json({
+      success: true,
+      movies: results,
+      genre: results
+    });
+  }else if (sortFilterParam){
+    const sqlSort = `SELECT * FROM freedb_BD_netflix.movies ORDER BY title ${sortFilterParam}`;
+    const [results] = await conn.query(sqlSort);
+    res.json({
+      success: true,
+      movies: results,
+      title: results
+    });
+  }else{
+    const sql = 'SELECT * FROM movies';
+    const [results] = await conn.query(sql);
+    console.log ("No he recibido el género");
+    res.json({
+      success: true,
+      movies: results,
+      genre: results
+    });
+  }
+
   conn.end();
 });
 
