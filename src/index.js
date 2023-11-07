@@ -61,10 +61,6 @@ server.get('/movies', async (req, res) => {
   conn.end();
 });
 
-// static server
-// const staticServerPath = './web/public';
-// server.use(express.static(staticServerPath));
-
 //endpoint para detalle
 server.get('/movie/:movieID', async (req, res) => {
   const conn = await getConnection(); //conexión
@@ -72,5 +68,15 @@ server.get('/movie/:movieID', async (req, res) => {
   const foundMovie = 'SELECT * FROM movies WHERE idMovies = ?'; //petición o consulta
   const [results] = await conn.query(foundMovie, [req.params.movieID]); //ejecutamos consulta y enlazamos con url params
   console.log(results);
-  res.render('pages/movie', foundMovie);
+  res.render('pages/movie', {movie: results[0]});
+  conn.end();
 });
+
+
+// static server
+const staticServerPath = './src/public-react';
+server.use(express.static(staticServerPath));
+
+//static server CSS
+const pathServerPublicStyles = './src/public-css';
+server.use(express.static(pathServerPublicStyles));

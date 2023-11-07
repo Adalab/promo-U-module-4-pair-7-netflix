@@ -5,19 +5,21 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/main.css"/>
   <title>Movie</title>
 </head>
 
 <body>
   <main>
+   
     <ul>
-      <li key=<%=idMovies %> className="card">
-        <img className="card__img" src=<%=image %> alt='Carátula de <%= title %>'' />
-          <h3 className="card__title">
-            <%= name %>
+      <li key=<%= movie.idMovies %> class="card">
+        <img class="card__img" src=<%= movie.image %> alt=`Carátula de <%= movie.title %>` />
+          <h3 class="card__title">
+            <%= movie.title %>
           </h3>
-          <p className="card__description">Género: <%= genre %>
-          </p>
+          <p className="card__description">Género: <%= movie.genre %></p>
+        </li>
     </ul>
   </main>
 </body>
