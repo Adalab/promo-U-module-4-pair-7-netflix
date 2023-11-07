@@ -26,23 +26,22 @@ Por favor marca a continuación los ejercicios que hayáis terminado:
 - [X] Entiende el código del proyecto
     
 4.5 Express JS I:
-- [ ] Pide todas las películas
+- [X] Pide todas las películas
     
 4.6 Express JS II:
-- [ ] Filtrar por género
-- [ ] Ordenar por nombre
+- [X] Filtrar por género
+- [X] Ordenar por nombre
 - [ ] Login
 - [ ] Bonus: Mantén logueada a la usuaria
     
 4.7 Express JS III:
 - [ ] Servidor de estáticos para React
 - [ ] Servidor de estáticos para las fotos
-- [ ] Crea un motor de plantillas
-      - [ ] Obtener el id de la película a renderizar
-      - [ ]  Obtener la película
-      - [ ] Renderiza una página cualquiera
-      - [ ] Renderiza la película
-      - [ ] Añade estilos
+- [X] Crea un motor de plantillas
+      - [X] Obtener el id de la película a renderizar
+      - [X]  Obtener la película
+      - [X] Renderiza la película
+      - [X] Añade estilos
     
 4.8 Mongo I:
 - [ ] Configura MongoDB Atlas
