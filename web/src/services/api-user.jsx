@@ -1,22 +1,22 @@
 // login
-const bodyParams = {
+/*const bodyParams = {
   userName: 'maricarmen',
   userEmail: 'mari@gmail.com',
   userPassword: 'qwerty',
-};
+};*/
 //login
 const sendLoginToApi = (data) => {
   console.log('Se están enviando datos al login:', data);
   // CAMBIA ESTE FETCH PARA QUE APUNTE A UN ENDPOINT DE TU SERVIDOR, PIENSA SI DEBE SER GET O POST, PIENSA QUÉ DATOS DEBES ENVIAR, ETC
   return (
-    fetch('http://localhost:4000/login'),
+    fetch('http://localhost:4000/login',
     {
       method: 'POST',
-      body: JSON.stringify(bodyParams),
+      body: JSON.stringify(data),
       headers: {
         'Content-Type': 'application/json',
       },
-    }
+    })
       .then((response) => response.json())
       .then((data) => {
         return data;

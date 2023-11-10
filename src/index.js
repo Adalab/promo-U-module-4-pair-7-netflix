@@ -76,12 +76,12 @@ server.get('/movie/:movieID', async (req, res) => {
 
 //endpoint sing-up
 server.post('/sign-up', async (req, res) => {
-  const userName = req.body.userName;
-  const userEmail = req.body.userEmail;
-  const userPassword = req.body.userPassword;
+  const userName = req.body.name;
+  const userEmail = req.body.email;
+  const userPassword = req.body.password;
   const passwordHash = await bcrypt.hash(userPassword, 10);
   const conn = await getConnection();
-  const sql = 'INSERT INTO users (user,password, email) VALUES (?,?,?)';
+  const sql = 'INSERT INTO users (user,password,name, email, plan_details) VALUES (?,?,?,?,?)';
   jwt.sign(userPassword, 'secret_key', async (err, token) => {
     if (err) {
       res.status(400).send({ msg: 'Error' });
@@ -89,8 +89,10 @@ server.post('/sign-up', async (req, res) => {
       const conn = await getConnection();
       const [results] = await conn.query(sql, [
         userName,
-        userEmail,
         passwordHash,
+        '',
+        userEmail,
+        ''
       ]);
       conn.end();
       //Si todo sale bien, se envía una respuesta JSON con un mensaje de éxito, el token JWT y el insertId,
@@ -107,41 +109,43 @@ server.post('/sign-up', async (req, res) => {
 server.post('/login', async (req, res) => {
   //recibe el cuerpo de la solicitud, que debería contener el nombre de usuario y la contraseña.
   const body = req.body;
-
+  //const passwordHash = await bcrypt.hash(userPassword, 10);
+ console.log (body);
   //Buscar si el usuario existe en la bases de datos
-  const sql = 'SELECT * FROM users WHERE username= ?';
+  const sql = 'SELECT * FROM users WHERE email= ?';
   const connection = await getConnection();
-  const [users] = await connection.query(sql, [body.username]);
+  const [users] = await connection.query(sql, [body.email]);
   connection.end();
 
   const user = users[0];
+  console.log (user);
 
   //Comprueba si el usuario existe y si la contraseña proporcionada es correcta utilizando bcrypt.compare.
   const passwordCorrect =
     user === null
       ? false
-      : await bcrypt.compare(body.password, user.passwordHash);
-
+      : await bcrypt.compare(body.password, user.password);
+ console.log (passwordCorrect);
   //Si el usuario no existe o la contraseña es incorrecta, responde con un estado 401 y un mensaje de error.
   if (!(user && passwordCorrect)) {
-    return response.status(401).json({
+    return res.status(401).json({
       error: 'Credenciales inválidas',
     });
   }
 
   //Si las credenciales son correctas, se prepara un objeto userForToken que incluye el username y el id del usuario.
   const userForToken = {
-    username: user.username,
-    id: user.id,
+    username: user.user,
+    id: user.idUser,
   };
 
   //Crear el token para enviar al front
   const token = generateToken(userForToken);
 
   //Finalmente, si todo es correcto, la función responde con un estado 200 y envía un objeto JSON con el token, el nombre de usuario y el nombre real del usuario.
-  response
+  res
     .status(200)
-    .json({ token, username: user.username, name: user.name });
+    .json({ token, username: user.user, name: user.name });
 });
 
 //generar token, verificar token & middleware
