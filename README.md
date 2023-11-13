@@ -36,7 +36,7 @@ Por favor marca a continuación los ejercicios que hayáis terminado:
 - [ ] Bonus: Mantén logueada a la usuaria
     
 4.7 Express JS III:
-- [ ] Servidor de estáticos para React
+- [X] Servidor de estáticos para React
 - [ ] Servidor de estáticos para las fotos
 - [X] Crea un motor de plantillas
       - [X] Obtener el id de la película a renderizar
