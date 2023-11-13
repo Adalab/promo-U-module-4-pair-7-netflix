@@ -31,7 +31,8 @@ Por favor marca a continuación los ejercicios que hayáis terminado:
 4.6 Express JS II:
 - [X] Filtrar por género
 - [X] Ordenar por nombre
-- [ ] Login
+- [X] Login
+- [X] Registro
 - [ ] Bonus: Mantén logueada a la usuaria
     
 4.7 Express JS III:
